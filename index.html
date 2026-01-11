@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sampriti Mandal | BS-MS Physics Researcher</title>
+    <style>
+        /* Base Styles & Variables */
+        :root {
+            --primary: #2563eb;
+            --secondary: #0f172a;
+            --accent: #3b82f6;
+            --bg-light: #f8fafc;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --white: #ffffff;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            overflow-x: hidden;
+        }
+
+        /* Reusable Components */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            padding: 5rem 0;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+            color: var(--secondary);
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 4px;
+            background: var(--primary);
+            margin: 10px auto;
+            border-radius: 2px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        #home {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: var(--white);
+            padding-top: 0;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: fadeIn 1s ease;
+        }
+
+        .hero-content p {
+            font-size: 1.25rem;
+            color: #cbd5e1;
+            margin-bottom: 2rem;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--white);
+            color: var(--white);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text p {
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: var(--transition);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .skill-card h3 {
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            background: #e2e8f0;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+        }
+
+        /* Experience & Education Cards */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--primary);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .card-date {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            color: var(--secondary);
+        }
+
+        .card h4 {
+            color: var(--text-light);
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .card ul {
+            padding-left: 1.2rem;
+            color: var(--text-light);
+        }
+
+        /* Contact Section */
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 4rem;
+        }
+
+        .contact-info div {
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-info i {
+            color: var(--primary);
+            margin-right: 1rem;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+        }
+
+        .submit-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        footer {
+            background: var(--secondary);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.5rem; }
+            .about-grid, .contact-content { grid-template-columns: 1fr; }
+            .nav-links { display: none; } /* Could add a hamburger menu */
+            .card-header { flex-direction: column; }
+            .btn-group { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="navbar">
+        <div class="container">
+            <a href="#home" class="logo">SM.</a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#experience">Research</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Sampriti Mandal</h1>
+                <p>BS-MS Physics Researcher | Specialized in Computational Astrophysics & General Relativity</p>
+                <div class="btn-group">
+                    <a href="#contact" class="btn btn-primary">Get In Touch</a>
+                    <a href="#experience" class="btn btn-outline">View Research</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>I am a 4th-year BS-MS student in the Department of Physical Sciences at IISER Kolkata, deeply passionate about exploring the universe through the lens of computational physics and general relativity.</p>
+                    <p>My work involves simulating complex astrophysical phenomena, from relativistic hydrodynamic codes for black hole accretion to modeling binary star systems. I have a strong foundation in theoretical physics and proficiency in a wide range of computational tools.</p>
+                </div>
+                <div class="about-stats">
+                    <div class="skill-card">
+                        <h3>Current Status</h3>
+                        <p><strong>Major:</strong> Physics</p>
+                        <p><strong>Institute:</strong> IISER Kolkata</p>
+                        <p><strong>Fellowship:</strong> IASC-INSA-NASI Fellow '24</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience" class="section">
+        <div class="container">
+            <h2 class="section-title">Research Experience</h2>
+            <div class="timeline">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>General Relativistic Hydrodynamic Simulation</h3>
+                        <span class="card-date">June 2025 - Present</span>
+                    </div>
+                    <h4>Supervised by Dr. Sudip K. Garain, CESSI, IISER Kolkata</h4>
+                    <ul>
+                        <li>Solving relativistic hydrodynamic equations analytically.</li>
+                        <li>Implementing results in code to convert conserved variables (D, S, T) to primitive variables (ρ, v, P).</li>
+                        <li>Developing simulations to study advective, sub-Keplerian accretion flow onto black holes.</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Roche Potential & Mass Transfer</h3>
+                        <span class="card-date">December 2024</span>
+                    </div>
+                    <h4>Supervised by Dr. Sudip K. Garain, CESSI, IISER Kolkata</h4>
+                    <ul>
+                        <li>Derived equations of motion for test masses in binary star systems.</li>
+                        <li>Simulated trajectories using Runge-Kutta 45 (RK45) integration in Python.</li>
+                        <li>Analyzed stable and unstable Lagrange points.</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Beam Shaping using SLM</h3>
+                        <span class="card-date">May 2024 - July 2024</span>
+                    </div>
+                    <h4>Supervised by Dr. Arijit De, IISER Mohali</h4>
+                    <ul>
+                        <li>Engineered experiments to modify laser spatial profiles using Spatial Light Modulators.</li>
+                        <li>Successfully generated Airy-Gaussian beams from Gaussian laser sources.</li>
+                        <li>Worked with 1920x1152 liquid crystal on silicon SLM technology.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="section">
+        <div class="container">
+            <h2 class="section-title">Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h3>Programming</h3>
+                    <div class="tag-container">
+                        <span class="tag">Python</span>
+                        <span class="tag">C</span>
+                        <span class="tag">Fortran</span>
+                        <span class="tag">MATLAB</span>
+                        <span class="tag">Mathematica</span>
+                        <span class="tag">Linux</span>
+                        <span class="tag">Gnuplot</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <h3>Physics Domain</h3>
+                    <div class="tag-container">
+                        <span class="tag">General Relativity</span>
+                        <span class="tag">Astrophysics</span>
+                        <span class="tag">Statistical Physics</span>
+                        <span class="tag">Computational Physics</span>
+                        <span class="tag">Quantum Mechanics</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <h3>Languages</h3>
+                    <div class="tag-container">
+                        <span class="tag">English</span>
+                        <span class="tag">Bengali</span>
+                        <span class="tag">Hindi</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="education" class="section">
+        <div class="container">
+            <h2 class="section-title">Education</h2>
+            <div class="timeline">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>BS-MS Dual Degree (Physics Major)</h3>
+                        <span class="card-date">2022 - 2027</span>
+                    </div>
+                    <h4>IISER Kolkata</h4>
+                    <p>Current CGPA: 8.11</p>
+                    <p><small>Courses: Classical Mechanics, Electrodynamics, Statistical Physics, General Relativity & Cosmology, Condensed Matter, Introductory Astrophysics.</small></p>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Higher Secondary (Class 12th)</h3>
+                        <span class="card-date">2021</span>
+                    </div>
+                    <h4>Nagari Shudhangshu Badani Siksha Niketan</h4>
+                    <p>Result: 94%</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="section-title">Contact Me</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div>
+                        <p><strong>Email:</strong><br>sm22ms123@iiserkol.ac.in<br>sampriti20012003mandal@gmail.com</p>
+                    </div>
+                    <div>
+                        <p><strong>Phone:</strong><br>+91 7477852752</p>
+                    </div>
+                    <div>
+                        <p><strong>Address:</strong><br>IISER Kolkata, West Bengal, India</p>
+                    </div>
+                </div>
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <input type="text" placeholder="Your Name" required id="name">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Your Email" required id="email">
+                    </div>
+                    <div class="form-group">
+                        <textarea rows="5" placeholder="Your Message" required id="message"></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                    <p id="formStatus" style="display:none; margin-top:10px; color: var(--primary);"></p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Sampriti Mandal. All rights reserved.</p>
+            <p><small>Last updated: December 2025</small></p>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll Reveal Animation
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Navigation Highlight
+        window.addEventListener('scroll', () => {
+            let current = '';
+            const sections = document.querySelectorAll('section, header');
+            const navLinks = document.querySelectorAll('.nav-links a');
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Simple Form Validation & Feedback
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const status = document.getElementById('formStatus');
+            const name = document.getElementById('name').value;
+            
+            status.style.display = 'block';
+            status.textContent = `Thank you, ${name}! Your message has been sent (simulated).`;
+            
+            this.reset();
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, 5000);
+        });
+
+        // Navbar blur effect on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.style.padding = '0.5rem 0';
+            } else {
+                nav.style.padding = '1rem 0';
+            }
+        });
+    </script>
+</body>
+</html>
